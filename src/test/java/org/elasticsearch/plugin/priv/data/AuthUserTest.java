@@ -18,7 +18,7 @@ public class AuthUserTest {
 		UserAuthenticator.reloadUserDataCache(null);
 		UserAuthenticator userAuth ;
 		
-		List<UserData> userDataList = new ArrayList<UserData>();
+		List<UserData> userDataList = new ArrayList<>();
 
 		userDataList.add(UserData.restoreFromESData("test_admin", UserData.encPassword("test_password"), "/"));
 		UserAuthenticator.reloadUserDataCache(userDataList);
@@ -39,7 +39,7 @@ public class AuthUserTest {
 		assertFalse(userAuth.execAuth("/*"));
 		assertFalse(userAuth.execAuth("/test_index"));
 
-		userDataList = new ArrayList<UserData>();
+		userDataList = new ArrayList<>();
 		userDataList.add(UserData.restoreFromESData("test_admin", UserData.encPassword("test_password"), "/test_index"));
 		UserAuthenticator.reloadUserDataCache(userDataList);
 		userAuth = new UserAuthenticator("test_admin", "test_password");
@@ -63,7 +63,7 @@ public class AuthUserTest {
 		assertFalse(userAuth.execAuth("/test_index"));
 		assertFalse(userAuth.execAuth("/test_index1"));
 
-		userDataList = new ArrayList<UserData>();
+		userDataList = new ArrayList<>();
 		userDataList.add(UserData.restoreFromESData("test_admin", UserData.encPassword("test_password"), "/test_index*"));
 		UserAuthenticator.reloadUserDataCache(userDataList);
 		userAuth = new UserAuthenticator("test_admin", "test_password");
@@ -121,7 +121,7 @@ public class AuthUserTest {
 		assertFalse(userAuth.execAuth("/test_*index"));
 		assertFalse(userAuth.execAuth("/*test_index"));
 
-		userDataList = new ArrayList<UserData>();
+		userDataList = new ArrayList<>();
 		userDataList.add(UserData.restoreFromESData("test_admin", UserData.encPassword("test_password"), "/test_*index"));
 		UserAuthenticator.reloadUserDataCache(userDataList);
 		userAuth = new UserAuthenticator("test_admin", "test_password");
@@ -146,7 +146,7 @@ public class AuthUserTest {
 		assertFalse(userAuth.execAuth("/test_*index"));
 		assertFalse(userAuth.execAuth("/*test_index"));
 
-		userDataList = new ArrayList<UserData>();
+		userDataList = new ArrayList<>();
 		userDataList.add(UserData.restoreFromESData("test_admin", UserData.encPassword("test_password"), "/*test_index"));
 		UserAuthenticator.reloadUserDataCache(userDataList);
 		userAuth = new UserAuthenticator("test_admin", "test_password");
@@ -171,7 +171,7 @@ public class AuthUserTest {
 		assertFalse(userAuth.execAuth("/test_*index"));
 		assertFalse(userAuth.execAuth("/*test_index"));
 
-		userDataList = new ArrayList<UserData>();
+		userDataList = new ArrayList<>();
 		userDataList.add(UserData.restoreFromESData("test_admin", UserData.encPassword("test_password"), "/test_*index*"));
 		UserAuthenticator.reloadUserDataCache(userDataList);
 		userAuth = new UserAuthenticator("test_admin", "test_password");
@@ -204,7 +204,7 @@ public class AuthUserTest {
 		assertFalse(userAuth.execAuth("/*test_index*"));
 		assertFalse(userAuth.execAuth("/*test_*index*"));
 
-		userDataList = new ArrayList<UserData>();
+		userDataList = new ArrayList<>();
 		userDataList.add(UserData.restoreFromESData("test_admin", UserData.encPassword("test_password"), "/*test_*index"));
 		UserAuthenticator.reloadUserDataCache(userDataList);
 		userAuth = new UserAuthenticator("test_admin", "test_password");
@@ -237,7 +237,7 @@ public class AuthUserTest {
 		assertFalse(userAuth.execAuth("/*test_index*"));
 		assertFalse(userAuth.execAuth("/*test_*index*"));
 
-		userDataList = new ArrayList<UserData>();
+		userDataList = new ArrayList<>();
 		userDataList.add(UserData.restoreFromESData("test_admin", UserData.encPassword("test_password"), "/*test_index*"));
 		UserAuthenticator.reloadUserDataCache(userDataList);
 		userAuth = new UserAuthenticator("test_admin", "test_password");
@@ -270,7 +270,7 @@ public class AuthUserTest {
 		assertFalse(userAuth.execAuth("/*test_index*"));
 		assertFalse(userAuth.execAuth("/*test_*index*"));
 
-		userDataList = new ArrayList<UserData>();
+		userDataList = new ArrayList<>();
 		userDataList.add(UserData.restoreFromESData("test_admin", UserData.encPassword("test_password"), "/*test_*index*"));
 		UserAuthenticator.reloadUserDataCache(userDataList);
 		userAuth = new UserAuthenticator("test_admin", "test_password");
@@ -311,7 +311,7 @@ public class AuthUserTest {
 		UserAuthenticator.reloadUserDataCache(null);
 		UserAuthenticator userAuth;
 		
-		List<UserData> userDataList = new ArrayList<UserData>();
+		List<UserData> userDataList = new ArrayList<>();
 
 		userAuth = new UserAuthenticator("root", "root_password");
 		assertTrue(userAuth.execAuth("/"));
@@ -332,7 +332,7 @@ public class AuthUserTest {
 		assertTrue(userAuth.execAuth("/*test_index*"));
 		assertTrue(userAuth.execAuth("/*test_*index*"));
 
-		userDataList = new ArrayList<UserData>();
+		userDataList = new ArrayList<>();
 		userDataList.add(UserData.restoreFromESData("test_admin", UserData.encPassword("test_password"), "/"));
 		UserAuthenticator.reloadUserDataCache(userDataList);
 		userAuth = new UserAuthenticator("test_admin", "test_password");
@@ -352,7 +352,7 @@ public class AuthUserTest {
 		assertFalse(userAuth.execAuth("/*"));
 		assertFalse(userAuth.execAuth("/test_index"));
 
-		userDataList = new ArrayList<UserData>();
+		userDataList = new ArrayList<>();
 		userDataList.add(UserData.restoreFromESData("test_admin", UserData.encPassword("test_password"), "/test_index"));
 		UserAuthenticator.reloadUserDataCache(userDataList);
 		userAuth = new UserAuthenticator("test_admin", "test_password");
@@ -376,7 +376,7 @@ public class AuthUserTest {
 		assertFalse(userAuth.execAuth("/test_index"));
 		assertFalse(userAuth.execAuth("/test_index1"));
 
-		userDataList = new ArrayList<UserData>();
+		userDataList = new ArrayList<>();
 		userDataList.add(UserData.restoreFromESData("test_admin", UserData.encPassword("test_password"), "/test_index*"));
 		UserAuthenticator.reloadUserDataCache(userDataList);
 		userAuth = new UserAuthenticator("test_admin", "test_password");
@@ -434,7 +434,7 @@ public class AuthUserTest {
 		assertFalse(userAuth.execAuth("/test_*index"));
 		assertFalse(userAuth.execAuth("/*test_index"));
 
-		userDataList = new ArrayList<UserData>();
+		userDataList = new ArrayList<>();
 		userDataList.add(UserData.restoreFromESData("test_admin", UserData.encPassword("test_password"), "/test_*index"));
 		UserAuthenticator.reloadUserDataCache(userDataList);
 		userAuth = new UserAuthenticator("test_admin", "test_password");
@@ -459,7 +459,7 @@ public class AuthUserTest {
 		assertFalse(userAuth.execAuth("/test_*index"));
 		assertFalse(userAuth.execAuth("/*test_index"));
 
-		userDataList = new ArrayList<UserData>();
+		userDataList = new ArrayList<>();
 		userDataList.add(UserData.restoreFromESData("test_admin", UserData.encPassword("test_password"), "/*test_index"));
 		UserAuthenticator.reloadUserDataCache(userDataList);
 		userAuth = new UserAuthenticator("test_admin", "test_password");
@@ -484,7 +484,7 @@ public class AuthUserTest {
 		assertFalse(userAuth.execAuth("/test_*index"));
 		assertFalse(userAuth.execAuth("/*test_index"));
 
-		userDataList = new ArrayList<UserData>();
+		userDataList = new ArrayList<>();
 		userDataList.add(UserData.restoreFromESData("test_admin", UserData.encPassword("test_password"), "/test_*index*"));
 		UserAuthenticator.reloadUserDataCache(userDataList);
 		userAuth = new UserAuthenticator("test_admin", "test_password");
@@ -517,7 +517,7 @@ public class AuthUserTest {
 		assertFalse(userAuth.execAuth("/*test_index*"));
 		assertFalse(userAuth.execAuth("/*test_*index*"));
 
-		userDataList = new ArrayList<UserData>();
+		userDataList = new ArrayList<>();
 		userDataList.add(UserData.restoreFromESData("test_admin", UserData.encPassword("test_password"), "/*test_*index"));
 		UserAuthenticator.reloadUserDataCache(userDataList);
 		userAuth = new UserAuthenticator("test_admin", "test_password");
@@ -558,7 +558,7 @@ public class AuthUserTest {
 		assertFalse(userAuth.execAuth("/*test_index*"));
 		assertFalse(userAuth.execAuth("/*test_*index*"));
 
-		userDataList = new ArrayList<UserData>();
+		userDataList = new ArrayList<>();
 		userDataList.add(UserData.restoreFromESData("test_admin", UserData.encPassword("test_password"), "/*test_index*"));
 		UserAuthenticator.reloadUserDataCache(userDataList);
 		userAuth = new UserAuthenticator("test_admin", "test_password");
@@ -595,7 +595,7 @@ public class AuthUserTest {
 		assertFalse(userAuth.execAuth("/*test_index*"));
 		assertFalse(userAuth.execAuth("/*test_*index*"));
 
-		userDataList = new ArrayList<UserData>();
+		userDataList = new ArrayList<>();
 		userDataList.add(UserData.restoreFromESData("test_admin", UserData.encPassword("test_password"), "/*test_*index*"));
 		UserAuthenticator.reloadUserDataCache(userDataList);
 		userAuth = new UserAuthenticator("test_admin", "test_password");

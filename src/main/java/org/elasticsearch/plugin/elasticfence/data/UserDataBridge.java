@@ -16,9 +16,10 @@ import org.elasticsearch.action.delete.DeleteResponse;
 import org.elasticsearch.action.get.GetResponse;
 import org.elasticsearch.action.search.SearchResponse;
 import org.elasticsearch.action.search.SearchType;
-import org.elasticsearch.client.Client;
+import org.elasticsearch.action.support.WriteRequest;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
+import org.elasticsearch.client.node.NodeClient;
 import org.elasticsearch.index.query.QueryBuilders;
 import org.elasticsearch.plugin.elasticfence.UserAuthenticator;
 import org.elasticsearch.plugin.elasticfence.logger.EFLogger;
@@ -33,9 +34,9 @@ public class UserDataBridge {
 	private static final String HTTP_USER_AUTH_INDEX = ".http_user_auth";
 	private static final String HTTP_USER_AUTH_TYPE = "user";
 	private static boolean isInitialized = false;
-	private Client client;
+	private NodeClient client;
 	
-	public UserDataBridge(Client client) {
+	public UserDataBridge(NodeClient client) {
 		this.client = client;
 		if (!isInitialized && !createIndexIfEmpty()) {
 			EFLogger.error("failed to create index: " + HTTP_USER_AUTH_INDEX);
@@ -88,9 +89,6 @@ public class UserDataBridge {
 	
 	/**
 	 * add permission to an user with specified indices
-	 * @param user
-	 * @param password
-	 * @param path
 	 * @return
 	 */
 	public boolean addAuthIndex (String userName, String indexName) {
@@ -128,9 +126,6 @@ public class UserDataBridge {
 	
 	/**
 	 * update permission of an user with specified indices
-	 * @param user
-	 * @param password
-	 * @param path
 	 * @return
 	 */
 	public boolean updateAuthIndex (String userName, String indexName) {
@@ -168,9 +163,6 @@ public class UserDataBridge {
 	
 	/**
 	 * add permission to an user with a specified index
-	 * @param user
-	 * @param password
-	 * @param path
 	 * @return
 	 */
 	public boolean removeAuth (String userName, String password, String indexName) {
@@ -231,7 +223,7 @@ public class UserDataBridge {
 			                        .field("created", created)
 			                    .endObject()
 			                  )
-			        .setRefresh(true)
+                    .setRefreshPolicy(WriteRequest.RefreshPolicy.IMMEDIATE)
 			        .execute()
 			        .get();
 			reloadUserDataCache();
@@ -267,13 +259,14 @@ public class UserDataBridge {
 		DeleteResponse response = null;
 		try {
 			response = client.prepareDelete(HTTP_USER_AUTH_INDEX, HTTP_USER_AUTH_TYPE, userName)
-					.setRefresh(true)
+                    .setRefreshPolicy(WriteRequest.RefreshPolicy.IMMEDIATE)
 			        .execute()
 			        .get();
 		} catch (InterruptedException | ExecutionException e) {
 			EFLogger.error("InterruptedException | ExecutionException", e);
 		}
-		if (response != null && response.isFound()) {
+
+		if (response != null && response.status().getStatus() == 200) {
 			reloadUserDataCache();
 			return true;
 		}

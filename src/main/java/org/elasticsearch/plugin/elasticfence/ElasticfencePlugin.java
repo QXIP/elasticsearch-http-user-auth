@@ -1,37 +1,46 @@
 package org.elasticsearch.plugin.elasticfence;
 
 import java.util.Arrays;
+import java.util.List;
 
+import org.elasticsearch.common.network.NetworkModule;
 import org.elasticsearch.common.settings.Settings;
 import org.elasticsearch.plugin.elasticfence.logger.EFLogger;
-import org.elasticsearch.rest.RestModule;
+import org.elasticsearch.plugins.ActionPlugin;
+import org.elasticsearch.plugins.ScriptPlugin;
+//import org.elasticsearch.rest.RestModule;
 
 import org.elasticsearch.plugins.Plugin;
+import org.elasticsearch.rest.RestHandler;
 
-public class ElasticfencePlugin extends Plugin {
+import static java.util.Collections.singletonList;
+
+//public class ElasticfencePlugin implements ScriptPlugin {
+//
+//}
+//public class ElasticfencePlugin extends Plugin implements ScriptPlugin {
+//
+//}
+
+public class ElasticfencePlugin extends Plugin implements ActionPlugin {
 
 	private final Settings settings;
 
-    	public ElasticfencePlugin(Settings settings){	
-        	this.settings = settings;
-        	EFLogger.info("loading elasticfence plugin...");
-    	}
+    public ElasticfencePlugin(Settings settings){
+        this.settings = settings;
+        EFLogger.info("loading elasticfence plugin...");
+    }
 
-        @Override
-	public String description() {
-		return "Elasticfence plugin";
-	}
+    @Override
+    public Settings additionalSettings() {
+        return Settings.EMPTY;
+    }
 
-        @Override
-	public String name() {
-		return "Elasticfence";
-	}
-
-	
-//    public Collection<Class<? extends Module>> modules() {
+    /*
+    //rest module deleted: https://github.com/elastic/elasticsearch/commit/60d35c81af8662c5771854e7e4fbc4a3dd3d78c1
     public void onModule(RestModule module) {
     	String isPluginDisabled = getSettingString("disabled");
-        
+
     	if (isPluginDisabled != null && "true".equals(isPluginDisabled)) {
             EFLogger.warn("Elasticfence plugin is disabled");
     	} else {
@@ -52,10 +61,46 @@ public class ElasticfencePlugin extends Plugin {
         		IPAuthenticator.setBlacklist(blacklist);
 	            	EFLogger.warn("elasticfence plugin IP blacklist enabled " + Arrays.toString(blacklist));
         	}
-    		
+
             module.addRestAction(AuthRestHandler.class);
             EFLogger.info("elasticfence plugin is enabled");
     	}
+    }
+    */
+
+    @Override
+    public Settings additionalSettings() {
+        return Settings.EMPTY;
+    }
+
+    @Override
+    public List<Class<? extends RestHandler>> getRestHandlers() {
+        String isPluginDisabled = getSettingString("disabled");
+
+        if (isPluginDisabled != null && "true".equals(isPluginDisabled)) {
+            EFLogger.warn("Elasticfence plugin is disabled");
+            return null;
+        } else {
+            String rootPassword = getSettingString("root.password");
+            if (rootPassword != null && !"".equals(rootPassword)) {
+                UserAuthenticator.setRootPassword(rootPassword);
+                UserAuthenticator.loadRootUserDataCacheOnStart();
+            }
+
+            String[] whitelist = getSettingArray("whitelist", new String[]{"127.0.0.1"});
+            String[] blacklist = getSettingArray("blacklist", new String[]{});
+
+            if (whitelist != null) {
+                IPAuthenticator.setWhitelist(whitelist);
+                EFLogger.warn("elasticfence plugin IP whitelist enabled " + Arrays.toString(whitelist));
+            }
+            if (blacklist != null) {
+                IPAuthenticator.setBlacklist(blacklist);
+                EFLogger.warn("elasticfence plugin IP blacklist enabled " + Arrays.toString(blacklist));
+            }
+
+            return singletonList(AuthRestHandler.class);
+        }
     }
 
     private String getSettingString(String key) {

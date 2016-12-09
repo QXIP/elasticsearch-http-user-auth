@@ -1,6 +1,6 @@
 package org.elasticsearch.plugin.elasticfence.logger;
 
-import org.elasticsearch.common.logging.ESLogger;
+import org.apache.logging.log4j.Logger;
 import org.elasticsearch.common.logging.ESLoggerFactory;
 
 /**
@@ -9,7 +9,8 @@ import org.elasticsearch.common.logging.ESLoggerFactory;
  *
  */
 public class EFLogger {
-	private static ESLogger esLogger;
+    //ESLogger (which this was) no longer exists, the ESLoggerFactory getLogger now returns a log4j logger instance
+	private static Logger esLogger;
 	static {
 		esLogger = ESLoggerFactory.getLogger("plugin.elasticfence");
 	}
